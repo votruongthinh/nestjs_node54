@@ -10,7 +10,7 @@ export class TokenService {
     
         // accessToken <=> AT (ghi tắt)
         const accessToken = jwt.sign({ userId: userId }, ACCESS_TOKEN_SECRET as string, {
-          expiresIn: '5s',
+          expiresIn: '1m',
         });
     
         return accessToken;
@@ -21,19 +21,19 @@ export class TokenService {
         }
     
         // refreshToken <=> RT (ghi tắt)
-        const refreshToken = jwt.sign({ userId: userId }, REFRESH_TOKEN_SECRET, {
+        const refreshToken = jwt.sign({ userId: userId }, REFRESH_TOKEN_SECRET as string, {
           expiresIn: '1d',
         });
     
         return refreshToken;
       }
     
-      verifyAccessToken(acccessToken, option) {
-        const decode = jwt.verify(acccessToken, ACCESS_TOKEN_SECRET, option);
+      verifyAccessToken(acccessToken, option?: jwt.VerifyOptions) {
+        const decode = jwt.verify(acccessToken, ACCESS_TOKEN_SECRET as string, option);
         return decode;
       }
-      verifyRefreshToken(refreshToken, option) {
-        const decode = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, option);
+      verifyRefreshToken(refreshToken, option?: jwt.VerifyOptions) {
+        const decode = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET as string, option);
         return decode;
       }
 }
