@@ -10,7 +10,7 @@ export class TokenService {
     
         // accessToken <=> AT (ghi tắt)
         const accessToken = jwt.sign({ userId: userId }, ACCESS_TOKEN_SECRET as string, {
-          expiresIn: '1m',
+          expiresIn: '5m',
         });
     
         return accessToken;
