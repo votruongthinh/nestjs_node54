@@ -17,6 +17,7 @@ export class OrderService {
 
     // send: quan trọng kết quả trả về, phải dợi kết quả trả về
     // bọc với await lastValueFrom
+    // @MessagePattern: để nhận tín hiệu khi sử dụng send
 
     const reuslt = await lastValueFrom(this.client.send('createOrder', data));
 

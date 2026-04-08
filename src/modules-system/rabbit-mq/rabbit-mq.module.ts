@@ -1,15 +1,12 @@
-import {
-  Global,
-  Inject,
-  Module,
-  OnModuleInit,
-} from '@nestjs/common';
+import { Global, Inject, Module, OnModuleInit } from '@nestjs/common';
 import { ClientProxy, ClientsModule, Transport } from '@nestjs/microservices';
 import { RABBIT_MQ_URL } from 'src/common/constant/app.constant';
 import { ORDER_SERVICE } from 'src/common/constant/rabbit-mq.constant';
+
 @Global()
 @Module({
   imports: [
+    // tạo ra sender
     ClientsModule.register([
       {
         name: ORDER_SERVICE,
@@ -18,7 +15,7 @@ import { ORDER_SERVICE } from 'src/common/constant/rabbit-mq.constant';
           urls: [RABBIT_MQ_URL!],
           queue: 'order_queue',
           queueOptions: {
-            durable: false,
+            durable: false, // nếu server order down, thì vẫn giữ lại queue
           },
           socketOptions: {
             connectionOptions: {
@@ -35,6 +32,7 @@ import { ORDER_SERVICE } from 'src/common/constant/rabbit-mq.constant';
 })
 export class RabbitMqModule implements OnModuleInit {
   constructor(@Inject(ORDER_SERVICE) private client: ClientProxy) {}
+
   async onModuleInit() {
     try {
       await this.client.connect();

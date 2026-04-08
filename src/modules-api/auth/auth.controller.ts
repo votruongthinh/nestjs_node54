@@ -39,29 +39,32 @@ export class AuthController {
       return true;
     }
   }
+
+  
   @Get('get-info')
   @Role('USER')
   getInfo(@User() user) {
     console.log('get-info', user);
 
-    if(user.totpSecret){
+    if (user.totpSecret) {
       user.isTotp = true;
     }
-    delete user.totpSecret
-    delete user.password
+    delete user.totpSecret;
+    delete user.password;
     return user;
   }
+
+
   @Post('refresh-token')
   @Public()
   async refreshToken(
     @Req() req: Request,
-    @Res({ passthrough: true }) 
+    @Res({ passthrough: true })
     res: Response,
   ) {
     const result = await this.AuthService.refreshToken(req);
     res.cookie('accessToken', result.accessToken);
     res.cookie('refreshToken', result.refreshToken);
     return true;
-
   }
 }

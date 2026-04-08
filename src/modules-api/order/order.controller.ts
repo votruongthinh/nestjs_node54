@@ -10,8 +10,8 @@ export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto,@User() user: Users) {
-    return this.orderService.create(createOrderDto,user);
+  create(@Body() createOrderDto: CreateOrderDto, @User() user: Users) {
+    return this.orderService.create(createOrderDto, user);
   }
 
   @Get()
